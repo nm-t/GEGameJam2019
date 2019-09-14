@@ -1,5 +1,6 @@
 let hasNecklace = false;
-var lookAroundOption = '<li id="look-around">Look around</li>';
+let lookAroundOption = '<li id="look-around">Look around</li>';
+let currentDialogueIndex = 0;
 
 let menu = '<h1>Actions:</h1>' +
 '<ul id="location">' +
@@ -16,10 +17,15 @@ function advance() {
     });
     $('#conversation li').on('click', function() {
         showDialogue($(this)[0].id);
+
+        showMenu(false);
     });
 }
 
 function changeLocation(location) {
+    $('#window').removeClass();
+    $('#window').addClass(location);
+
     if (location == 'go-to-bar') {
         dialogue = 'You go to the bar.';
 
@@ -54,8 +60,8 @@ function changeLocation(location) {
     });
 }
 
-function showMenu() {
-    if (menu !== null) {
+function showMenu(flag) {
+    if (flag == true || menu !== null) {
         $('#menu').css('opacity', 1);
         $('#menu').html(menu);
     }
@@ -64,7 +70,12 @@ function showMenu() {
     }
 }
 
-function showDialogue(person) {
+function showDialogue(option) {
+    if (option == 'flirt') {
+        dialogue = '\"Did it hurt when you fell from heaven?\"';
+    }
+
+    console.log(option);
     console.log(dialogue);
     if (dialogue !== null) {
         $('#dialogue').css('opacity', 1);
