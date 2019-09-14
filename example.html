@@ -4,27 +4,35 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Document</title>
+    <title>GE Game Jam 2019</title>
     <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
-    <main>
-        <section class="menu">
-            <h1>Go to:</h1>
-            <ul id="location">
-                <li id="house-1">House 1</li>
-                <li id="field">Field</li>
-                <li id="location">Location</li>
-            </ul>
-        </section>
-        <section class="dialogue-holder">
-            <div class="image-holder">
-                <img src="./image/lol.png"/>
-            </div>
-            <div class="text-holder">
-                <p>TALI: Fugiat officia in ut nulla commodo voluptate quis aliqua mollit. Dolore anim quis deserunt et voluptate consectetur ipsum aliqua adipisicing sunt laborum id nostrud.</p>
-            </div>
-        </section>
+    <main id="window" class="forest">
+        <div>
+            <section id="menu" class="menu">
+                <h1>Go to:</h1>
+                <ul id="location">
+                    <li id="house-1">House 1</li>
+                    <li id="forest">Field</li>
+                    <li id="town">Location</li>
+                </ul>
+                <h1>Talk to:</h1>
+                <ul id="conversation">
+                    <li id="cat">Cat</li>
+                    <li id="dog">Dog</li>
+                </ul>
+            </section>
+            <section id="dialogue" class="dialogue-holder">
+                <div id="image-holder">
+                    <div class="image"></div>
+                </div>
+                <div class="text-holder">
+                    <p>Welcome, hero! Fugiat officia in ut nulla commodo voluptate quis aliqua mollit. Dolore anim quis deserunt et voluptate consectetur ipsum aliqua adipisicing sunt laborum id nostrud.</p>
+                    <span id="next"></span>
+                </div>
+            </section>
+        </div>
     </main>
     <script
     src="https://code.jquery.com/jquery-3.4.1.min.js"

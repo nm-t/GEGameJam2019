@@ -1,4 +1,5 @@
 body {
+  margin: 0;
   font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif
 }
 
@@ -6,31 +7,100 @@ p {
   margin: 0;
 }
 
+#window {
+  position: absolute;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  width: 100vw;
+  height: 100vh;
+}
+
+#window.forest {
+  background-image: url('./../image/bg/forest.jpg');
+}
+#window.town {
+  background-image: url('./../image/bg/town.jpg');
+}
+
+#menu {
+  opacity: 0;
+  background-color: rgba(255, 255, 255, 0.5);
+  margin: 50px;
+  padding: 20px;
+  width: 200px;
+}
+
+.menu h1:first-of-type {
+  margin-top: 0;
+}
+
+.menu ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.menu ul li {
+  margin: 10px 0;
+  left: 0;
+}
+
+.menu ul li:focus,
+.menu ul li:hover {
+  position: relative;
+  left: 10px;
+  transition: left 0.2s;
+}
+
 .dialogue-holder {
   display: flex;
   flex-direction: row;
   border-radius: 10px;
   height: 200px;
+  margin: 50px;
   padding: 50px;
-  background-color: red;
+  background-color: rgba(255, 255, 255, 0.8);
   text-align: left;
+  position: absolute;
+  bottom: 0;
 }
   
-.image-holder {
+#image-holder {
+  display: none;
   min-width: 200px;
-  height: 200px;
+  min-height: 200px;
   margin-right: 50px;
 }
 
-img {
+#image-holder .image {
   width: 100%;
   height: 100%;
 }
 
+#image-holder.cat .image {
+  background-image: url('./../image/char/lol.png');
+}
+#image-holder.dog .image {
+  background-image: url('./../image/char/glob.png');
+}
+
 .text-holder {
   overflow: hidden;
+  position: relative;
+}
+
+.text-holder #next {
+  display: inline-block;
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  width: 20px;
+  height: 20px;
+  background-color: red;
 }
 
 .text-holder p {
   font-size: 36px;
+  line-height: 50px;
 }
