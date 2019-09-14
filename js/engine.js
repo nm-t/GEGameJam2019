@@ -1,12 +1,11 @@
 let hasStarted = false;
-let menu = '<li id="go-to-bar" data-action="menu-dialogue">Go to bar</li>' +
-    '<li id="look-around" data-action="menu-dialogue">Look around</li>';
-let speaker = null;
+let menu = '<li id="go-to-bar" data-action="progress-dialogue">Continue</li>';
+let dialogueArray;
 let dialogue = '';
 
-const introDialogue = [
-    'Hello',
-    'Second text'
+const barDialogue = [
+    '<i>You walk up to the bar and beckon to the bartender to order your drink.</i>',
+    'Hey there, can I get whatever is on tap?'
 ];
 
 let dialogueCounter = 0;
@@ -15,19 +14,34 @@ let hasNecklace = false;
 
 function render(id) {
     if (id == 'next') {
-        dialogue = introDialogue[dialogueCounter];
-        dialogueCounter++;
+        if (dialogueArray == null || dialogueArray == undefined) {
+        }
+        else {
+            dialogue = dialogueArray[dialogueCounter];
 
-        if (dialogueCounter == introDialogue.length) {
-            $('#next').hide(); 
-            dialogueCounter = 0;
+            if (dialogueCounter == dialogueArray.length - 1) {
+                $('#next').attr('data-action', 'menu-dialogue');
+                $('#next').hide();
+                dialogueCounter = 0;
+            }
         }
     }
     else if (id == 'go-to-bar') {
         $('#window').removeClass();
         $('#window').addClass(id);
-        menu = '<li id="flirt" data-action="hide-dialogue">Flirt</li>'
-        dialogue = 'You walk up to the bar and beckoned to the bartender to order your drink.';
+        menu = '<li id="order-drink" data-action="progress-dialogue">Order drink</li>'
+
+        dialogueArray = barDialogue;
+        dialogue = dialogueArray[0];
+        dialogueCounter++;
+        $('#next').attr('data-action', 'progress-dialogue');
+        $('#next').show();
+    }
+    else if (id == 'order-drink') {
+        $('#window').removeClass();
+        $('#window').addClass(id);
+        menu = '<li id="go-to-bar" data-action="progress-dialogue">Go to bar</li>'
+        dialogue = 'You find a necklace.';
     }
     else if (id == 'look-around') {
         $('#window').removeClass();
@@ -37,7 +51,6 @@ function render(id) {
     }
     else if (id == 'flirt') {
         menu = '<li id="flirt" data-action="progress-dialogue">Flirt</li>';
-        speaker = 'hero';
         dialogue = 'Did it hurt when you fell from heaven?';
         
         dialogue = introDialogue[dialogueCounter];
@@ -48,6 +61,9 @@ function render(id) {
             dialogueCounter = 0;
         }
     }
+    console.log({dialogueCounter});
+    console.log({dialogueArray});
+    console.log({dialogue});
 
     let action = $('#' + id).attr('data-action');
 
@@ -73,7 +89,8 @@ function render(id) {
 }
 
 function toggleMenu(flag) {
-    if (flag == true || menu !== '') {
+    console.log({flag});
+    if (flag == true && menu !== '') {
         $('#menu ul').html(menu);
         $('#menu').show();
     }
@@ -83,11 +100,8 @@ function toggleMenu(flag) {
 }
 
 function toggleDialogue(flag) {
+    console.log({flag});
     if (flag == true && dialogue !== '') {
-        if (speaker !== null) {
-            $('#dialogue #image-holder').removeClass();
-            $('#dialogue #image-holder').addClass(speaker);
-        }
         $('#dialogue .text-holder p').html(dialogue);
         $('#dialogue').show();
     }
@@ -97,6 +111,7 @@ function toggleDialogue(flag) {
 }
 
 function attachEventListeners() {
+    $('#next, li').off();
     $('#next, li').on('click', function() {
         render($(this)[0].id);
     });
