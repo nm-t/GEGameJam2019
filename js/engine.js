@@ -1,98 +1,107 @@
-let hasNecklace = false;
-let lookAroundOption = '<li id="look-around">Look around</li>';
-let currentDialogueIndex = 0;
-
-let menu = '<h1>Actions:</h1>' +
-'<ul id="location">' +
-    '<li id="go-to-bar">Go to bar</li>' +
-    '<li id="look-around">Look around</li>' +
-'</ul>';
+let hasStarted = false;
+let menu = '<li id="go-to-bar" data-action="menu-dialogue">Go to bar</li>' +
+    '<li id="look-around" data-action="menu-dialogue">Look around</li>';
+let speaker = null;
 let dialogue = '';
 
-function advance() {
-    showMenu();
+const introDialogue = [
+    'Hello',
+    'Second text'
+];
 
-    $('#location li').on('click', function() {
-        changeLocation($(this)[0].id);
-    });
-    $('#conversation li').on('click', function() {
-        showDialogue($(this)[0].id);
+let dialogueCounter = 0;
 
-        showMenu(false);
-    });
+let hasNecklace = false;
+
+function render(id) {
+    if (id == 'next') {
+        dialogue = introDialogue[dialogueCounter];
+        dialogueCounter++;
+
+        if (dialogueCounter == introDialogue.length) {
+            $('#next').hide(); 
+            dialogueCounter = 0;
+        }
+    }
+    else if (id == 'go-to-bar') {
+        $('#window').removeClass();
+        $('#window').addClass(id);
+        menu = '<li id="flirt" data-action="hide-dialogue">Flirt</li>'
+        dialogue = 'You walk up to the bar and beckoned to the bartender to order your drink.';
+    }
+    else if (id == 'look-around') {
+        $('#window').removeClass();
+        $('#window').addClass(id);
+        menu = '<li id="go-to-bar" data-action="progress-dialogue">Go to bar</li>'
+        dialogue = 'You find a necklace.';
+    }
+    else if (id == 'flirt') {
+        menu = '<li id="flirt" data-action="progress-dialogue">Flirt</li>';
+        speaker = 'hero';
+        dialogue = 'Did it hurt when you fell from heaven?';
+        
+        dialogue = introDialogue[dialogueCounter];
+        dialogueCounter++;
+
+        if (dialogueCounter == introDialogue.length) {
+            $('#next').hide(); 
+            dialogueCounter = 0;
+        }
+    }
+
+    let action = $('#' + id).attr('data-action');
+
+    if (action == 'progress-dialogue') {
+        toggleMenu(false);
+        toggleDialogue(true);
+    }
+    else if (action == 'hide-dialogue') {
+        toggleMenu(true);
+        toggleDialogue(false);
+    }
+    else if (action == 'menu-dialogue') {
+        toggleMenu(true);
+        toggleDialogue(true);
+    }
+    else if (action == 'fail-state') {
+        toggleMenu(false);
+        toggleDialogue(false);
+        // Show fail screen
+    }
+
+    attachEventListeners();
 }
 
-function changeLocation(location) {
-    $('#window').removeClass();
-    $('#window').addClass(location);
-
-    if (location == 'go-to-bar') {
-        dialogue = 'You go to the bar.';
-
-        menu = '<h1>Actions:</h1>' +
-            '<ul id="location">' +
-                lookAroundOption +
-            '</ul>' +
-            '<ul id="conversation">' +
-                '<li id="flirt">Flirt</li>' +
-                '<li id="ask-for-drink">Ask for drink</li>' +
-            '</ul>';
-    }
-    else if (location == 'look-around' && hasNecklace == false) {
-        dialogue = 'You have a look around the bar. You find a necklace on the floor!';
-
-        lookAroundOption = '';
-
-        menu = '<h1>Actions:</h1>' +
-            '<ul id="location">' +
-                '<li id="go-to-bar">Go to bar</li>' +
-            '</ul>';
-    }
-
-    showMenu();
-    showDialogue();
-
-    $('#location li').on('click', function() {
-        changeLocation($(this)[0].id);
-    });
-    $('#conversation li').on('click', function() {
-        showDialogue($(this)[0].id);
-    });
-}
-
-function showMenu(flag) {
-    if (flag == true || menu !== null) {
-        $('#menu').css('opacity', 1);
-        $('#menu').html(menu);
+function toggleMenu(flag) {
+    if (flag == true || menu !== '') {
+        $('#menu ul').html(menu);
+        $('#menu').show();
     }
     else {
-        $('#menu').css('opacity', 0);
+        $('#menu').hide();
     }
 }
 
-function showDialogue(option) {
-    if (option == 'flirt') {
-        dialogue = '\"Did it hurt when you fell from heaven?\"';
-    }
-
-    console.log(option);
-    console.log(dialogue);
-    if (dialogue !== null) {
-        $('#dialogue').css('opacity', 1);
+function toggleDialogue(flag) {
+    if (flag == true && dialogue !== '') {
+        if (speaker !== null) {
+            $('#dialogue #image-holder').removeClass();
+            $('#dialogue #image-holder').addClass(speaker);
+        }
         $('#dialogue .text-holder p').html(dialogue);
+        $('#dialogue').show();
     }
     else {
-        $('#dialogue').css('opacity', 0);
+        $('#dialogue').hide();
     }
 }
 
-// Event listeners
-$('#location li').on('click', function() {
-    changeLocation($(this)[0].id);
-});
-$('#conversation li').on('click', function() {
-    talkTo($(this)[0].id);
-});
-$('#next').on('click', function() {
-    advance();
-});
+function attachEventListeners() {
+    $('#next, li').on('click', function() {
+        render($(this)[0].id);
+    });
+}
+
+window.onload = function() {
+    attachEventListeners();
+}
