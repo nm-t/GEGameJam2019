@@ -1,35 +1,48 @@
-let chapter = 1;
-let menu = '<h1>Go to:</h1>' +
+let hasNecklace = false;
+var lookAroundOption = '<li id="look-around">Look around</li>';
+
+let menu = '<h1>Actions:</h1>' +
 '<ul id="location">' +
-    '<li id="house-1">House 1</li>' +
-    '<li id="forest">Field</li>' +
-    '<li id="town">Location</li>' +
-'</ul>' +
-'<h1>Talk to:</h1>' +
-'<ul id="conversation">' +
-    '<li id="cat">Cat</li>' +
-    '<li id="dog">Dog</li>' +
+    '<li id="go-to-bar">Go to bar</li>' +
+    '<li id="look-around">Look around</li>' +
 '</ul>';
-let dialogue = null;
-
-// Changes the background of the window
-function changeLocation(location) {
-    $('#window').removeClass();
-    $('#window').addClass(location);
-    $('#dialogue').hide();
-}
-
-var i = 0;
-var txt = 'Lorem ipsum dummy text blabla.';
-var speed = 20;
-let string = '';
-
-function talkTo(person) {
-    $('#dialogue').show();
-    $('#dialogue .text-holder p').html(string);
-}
+let dialogue = '';
 
 function advance() {
+    showMenu();
+
+    $('#location li').on('click', function() {
+        changeLocation($(this)[0].id);
+    });
+    $('#conversation li').on('click', function() {
+        showDialogue($(this)[0].id);
+    });
+}
+
+function changeLocation(location) {
+    if (location == 'go-to-bar') {
+        dialogue = 'You go to the bar.';
+
+        menu = '<h1>Actions:</h1>' +
+            '<ul id="location">' +
+                lookAroundOption +
+            '</ul>' +
+            '<ul id="conversation">' +
+                '<li id="flirt">Flirt</li>' +
+                '<li id="ask-for-drink">Ask for drink</li>' +
+            '</ul>';
+    }
+    else if (location == 'look-around' && hasNecklace == false) {
+        dialogue = 'You have a look around the bar. You find a necklace on the floor!';
+
+        lookAroundOption = '';
+
+        menu = '<h1>Actions:</h1>' +
+            '<ul id="location">' +
+                '<li id="go-to-bar">Go to bar</li>' +
+            '</ul>';
+    }
+
     showMenu();
     showDialogue();
 
@@ -37,7 +50,7 @@ function advance() {
         changeLocation($(this)[0].id);
     });
     $('#conversation li').on('click', function() {
-        talkTo($(this)[0].id);
+        showDialogue($(this)[0].id);
     });
 }
 
@@ -51,20 +64,11 @@ function showMenu() {
     }
 }
 
-function showDialogue() {
-    switch(chapter) {
-        case 0: {
-            
-            break;
-        }
-        default: {
-            dialogue = null;
-        }
-    }
-
+function showDialogue(person) {
+    console.log(dialogue);
     if (dialogue !== null) {
         $('#dialogue').css('opacity', 1);
-        $('#dialogue').html(dialogue);
+        $('#dialogue .text-holder p').html(dialogue);
     }
     else {
         $('#dialogue').css('opacity', 0);
