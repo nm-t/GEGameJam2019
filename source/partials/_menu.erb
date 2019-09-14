@@ -1,0 +1,19 @@
+<%
+	vars = {
+        :options => [
+            :title => 'one',
+            :path => '#'
+        ]
+	}.deep_merge(locals)
+%>
+
+<div class="menu">
+    <h1>Go to:</h1>
+    <ul>
+        <% vars[:options].each do |option| %>
+        <li>
+            <a href="<%= option[:path] %>"><%= option[:title] %></a>
+        </li>
+        <% end %>
+    </ul>
+</div>
