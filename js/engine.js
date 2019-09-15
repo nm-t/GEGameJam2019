@@ -11,7 +11,7 @@ const barDialogue = [
     'Hey there, can I get whatever is on tap?'
 ];
 const orderDrinkDialogue = [
-    '<span style="color: #707BFB;">Here it is.</span>',
+    '<span style="color: #707BFB;">Here is your drink. Cold outside isn\'t it?</span>',
     '<i>She is the first person you have interacted with since forever.</i>'
 ];
 const whyWorriedDialogue = [
@@ -24,7 +24,7 @@ const barWithNecklaceDialogue = [
     '<span style="color: #707BFB;">Oh thank you. That\'s amazing, I really thought I had lost it!</span>'
 ];
 const flirtDialogue = [
-    '<span style="color: #707BFB;">No thanks. The door\'s that way.</span>'
+    '<span style="color: #707BFB;">Don\'t hit on me. I\'m here to work, not date. Besides in a bar full of drunk and available people, why would you want to hit on the only sober one?</span>'
 ];
 const tipDialogue = [
     '<span style="color: #707BFB;">Thanks.</span>'
@@ -89,7 +89,7 @@ function render(id) {
         if (drinksOrdered == 3) {
             $('#next').attr('data-action', 'fail-state');
 
-            dialogue = 'I\'m outta here.'
+            dialogue = '<span style="color: #707BFB;">Here is your drink. Cold outside isn\'t it? ... Do you even care that I\'ve said the same times three times?</span>'
         }
         console.log(drinksOrdered);
     }
@@ -152,6 +152,8 @@ function render(id) {
     else if (action == 'fail-state') {
         toggleMenu(false);
         toggleDialogue(false);
+
+        $('#window.order-drink').addClass('fail');
         
         if (drinksOrdered == 3) {
             showJessieScreen();

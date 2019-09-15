@@ -30,6 +30,7 @@ p {
   width: 50%;
   height: 390px;
   margin: 0 auto;
+  margin-top: 100px;
   background-image: url('./../image/title.png');
   background-size: cover;
   background-repeat: no-repeat;
@@ -42,7 +43,6 @@ p {
 }
 
 #jessies-adventure.start .title-image {
-  margin-top: 100px;
   background-image: url('./../image/jessies-adventure.png');
 }
 
@@ -99,29 +99,39 @@ p {
   color: white;
 }
 
-#window.go-to-bar::after {
+/* Jessie */
+#window.go-to-bar::after,
+#window.order-drink::after {
   content: '';
   position: absolute;
-  top: 100px;
+  top: 250px;
   right: 150px;
   width: 200px;
-  height: 500px;
-  background-color: pink;
+  height: 300px;
+  background-image: url('./../image/char/neutral.png');
+  background-size: cover;
 }
 
+/* Jessie */
+#window.fail::after,
+#window.fail::after {
+  content: none !important;
+}
+
+/* Necklace */
 #window.look-around::after {
   content: '';
   position: absolute;
   top: 130px;
   right: 350px;
-  width: 200px;
+  width: 300px;
   height: 200px;
-  background-color: gold;
+  background-image: url('./../image/necklace.png');
 }
 
 #menu {
   display: none;
-  background-color: rgba(255, 255, 255, 0.5);
+  background-color: rgba(255, 255, 255, 0.8);
   margin: 50px;
   padding: 20px;
   width: 200px;
@@ -138,15 +148,13 @@ p {
 }
 
 .menu ul li {
-  margin: 10px 0;
+  padding: 10px;
   left: 0;
 }
 
 .menu ul li:focus,
 .menu ul li:hover {
-  position: relative;
-  left: 10px;
-  transition: left 0.2s;
+  background-color: rgba(29,109,250, 0.5);
 }
 
 .dialogue-holder {
