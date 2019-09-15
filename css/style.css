@@ -14,7 +14,54 @@ p {
   background-repeat: no-repeat;
   width: 100vw;
   height: 100vh;
-  background-image: url('./../image/bg/forest.jpg');
+  background-image: url('./../image/bg.jpg');
+}
+
+#window .start {
+  z-index: 10;
+  position: absolute;
+  background-color: #FBCBFF;
+  width: 100vw;
+  height: 100vh;
+}
+
+#window .start .title-image {
+  width: 50%;
+  height: 390px;
+  margin: 0 auto;
+  background-image: url('./../image/title.png');
+  background-size: cover;
+  background-repeat: no-repeat;
+}
+
+.start ul {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  list-style: none;
+  padding: 0;
+  text-align: center;
+}
+
+.start ul li {
+  display: inline-block;
+  background-color: white;
+  padding: 12px 20px;
+  width: 90px;
+  color: #707BFB;
+  font-size: 20px;
+  border-radius: 50px;
+  margin-bottom: 10px;
+  border: 3px solid #707BFB;
+}
+
+.start ul li:hover {
+  cursor: pointer;
+}
+
+.start ul li a {
+  text-decoration: none;
+  color: inherit;
 }
 
 #window .fail {

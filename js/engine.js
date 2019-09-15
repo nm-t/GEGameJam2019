@@ -160,6 +160,7 @@ function progressDialogue(dialogueOption) {
 
     // debugger;
     if (dialogueOption == flirtDialogue ||
+        dialogueOption == askForDateDialogue ||
         dialogueOption == offerDrinkDialogue) {
         $('#next').attr('data-action', 'fail-state');
     }
@@ -200,6 +201,10 @@ function showFailScreen() {
 
 window.onload = function() {
     attachEventListeners();
+
+    $('#start').on('click', function() {
+        $('#title-card').fadeOut(1000);
+    });
 }
 
 $(document).on('keypress', function(e) {
