@@ -24,13 +24,16 @@ const barWithNecklaceDialogue = [
     '<span style="color: red;">Oh thank you. That\'s amazing, I really thought I had lost it!</span>'
 ];
 const flirtDialogue = [
-    'No thanks.'
+    'No thanks. The door\'s that way.'
 ];
 const tipDialogue = [
     'Thanks.'
 ];
 const askForDateDialogue = [
     'Thanks, but no thanks.'
+];
+const offerDrinkDialogue = [
+    'That\'s inappropriate. And weird. Who offers a bartender a drink <i>while</i> they\'re working?'
 ];
 
 let dialogueCounter = 0;
@@ -41,8 +44,10 @@ function render(id) {
     }
 
     if (id == 'next') {
-        console.log(dialogueArray);
-        if (!(dialogueArray == null || dialogueArray == undefined)) {
+        if ($('#next').attr('data-action') == 'fail-state') {
+            
+        }
+        else if (!(dialogueArray == null || dialogueArray == undefined)) {
             dialogue = dialogueArray[dialogueCounter];
             dialogueCounter++;
 
@@ -106,6 +111,12 @@ function render(id) {
         
         progressDialogue(tipDialogue);
     }
+    else if (id == 'offer-drink') {
+        menu = '<li id="flirt" data-action="progress-dialogue">Flirt</li>' +
+        '<li id="ask-for-date" data-action="progress-dialogue">Ask for date</li>';
+        
+        progressDialogue(offerDrinkDialogue);
+    }
     else if (id == 'look-around') {
         $('#window').removeClass();
         $('#window').addClass(id);
@@ -135,7 +146,7 @@ function render(id) {
     else if (action == 'fail-state') {
         toggleMenu(false);
         toggleDialogue(false);
-        // Show fail screen
+        showFailScreen();
     }
 
     attachEventListeners();
@@ -145,8 +156,14 @@ function progressDialogue(dialogueOption) {
     dialogueArray = dialogueOption;
     dialogue = dialogueArray[0];
     dialogueCounter++;
-    
     $('#next').attr('data-action', 'progress-dialogue');
+
+    // debugger;
+    if (dialogueOption == flirtDialogue ||
+        dialogueOption == offerDrinkDialogue) {
+        $('#next').attr('data-action', 'fail-state');
+    }
+    
     $('#next').show();
 }
 
@@ -175,6 +192,10 @@ function attachEventListeners() {
     $('#next, li').on('click', function() {
         render($(this)[0].id);
     });
+}
+
+function showFailScreen() {
+    $('#window .fail').css({'opacity':0}).animate({'opacity':1}, 3000)
 }
 
 window.onload = function() {

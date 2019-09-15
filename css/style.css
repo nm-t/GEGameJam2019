@@ -17,6 +17,29 @@ p {
   background-image: url('./../image/bg/forest.jpg');
 }
 
+#window .fail {
+  opacity: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  background-color: black;
+}
+
+#window .fail h1 {
+  margin: 0;
+  font-size: 120px;
+  font-family: serif;
+  color: red;
+  text-transform: uppercase;
+}
+
+#window .fail h2 {
+  color: white;
+}
+
 #window.go-to-bar::after {
   content: '';
   position: absolute;
