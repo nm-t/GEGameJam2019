@@ -11,29 +11,29 @@ const barDialogue = [
     'Hey there, can I get whatever is on tap?'
 ];
 const orderDrinkDialogue = [
-    '<span style="color: red;">Here it is.</span>',
+    '<span style="color: #707BFB;">Here it is.</span>',
     '<i>She is the first person you have interacted with since forever.</i>'
 ];
 const whyWorriedDialogue = [
     '<i>You lean in.</i>',
     'You look worried sweetie. What\'s up?',
-    '<span style="color: red;">I lost my necklace and don\'t have time to look for it.</span>'
+    '<span style="color: #707BFB;">I lost my necklace and don\'t have time to look for it.</span>'
 ];
 const barWithNecklaceDialogue = [
     'I found it on the floor near the door.',
-    '<span style="color: red;">Oh thank you. That\'s amazing, I really thought I had lost it!</span>'
+    '<span style="color: #707BFB;">Oh thank you. That\'s amazing, I really thought I had lost it!</span>'
 ];
 const flirtDialogue = [
-    'No thanks. The door\'s that way.'
+    '<span style="color: #707BFB;">No thanks. The door\'s that way.</span>'
 ];
 const tipDialogue = [
-    'Thanks.'
+    '<span style="color: #707BFB;">Thanks.</span>'
 ];
 const askForDateDialogue = [
-    'Thanks, but no thanks.'
+    '<span style="color: #707BFB;">Thanks, but no thanks.</span>'
 ];
 const offerDrinkDialogue = [
-    'That\'s inappropriate. And weird. Who offers a bartender a drink <i>while</i> they\'re working?'
+    '<span style="color: #707BFB;">That\'s inappropriate. And weird. Who offers a bartender a drink <i>while</i> they\'re working?</span>'
 ];
 
 let dialogueCounter = 0;
@@ -86,6 +86,12 @@ function render(id) {
 
         progressDialogue(orderDrinkDialogue);
         drinksOrdered++;
+        if (drinksOrdered == 3) {
+            $('#next').attr('data-action', 'fail-state');
+
+            dialogue = 'I\'m outta here.'
+        }
+        console.log(drinksOrdered);
     }
     else if (id == 'why-worried') {
         menu = '<li id="look-around" data-action="progress-dialogue">Look around</li>';
@@ -146,7 +152,13 @@ function render(id) {
     else if (action == 'fail-state') {
         toggleMenu(false);
         toggleDialogue(false);
-        showFailScreen();
+        
+        if (drinksOrdered == 3) {
+            showJessieScreen();
+        }
+        else {
+            showFailScreen();
+        }
     }
 
     attachEventListeners();
@@ -197,6 +209,11 @@ function attachEventListeners() {
 
 function showFailScreen() {
     $('#window .fail').css({'opacity':0}).animate({'opacity':1}, 3000)
+}
+
+function showJessieScreen() {
+    $('#window #jessies-adventure').css('z-index', 11);
+    $('#window #jessies-adventure').css({'opacity':0}).animate({'opacity':1}, 3000)
 }
 
 window.onload = function() {
