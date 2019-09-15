@@ -89,7 +89,7 @@ function render(id) {
         if (drinksOrdered == 3) {
             $('#next').attr('data-action', 'fail-state');
 
-            dialogue = '<span style="color: #707BFB;">Here is your drink. Cold outside isn\'t it? ... Do you even care that I\'ve said the same times three times?</span>'
+            dialogue = '<span style="color: #707BFB;">Here is your drink. Cold outside isn\'t it? ... Do you even care that I\'ve said the same times three times? I\'m leaving to be the hero in my own game.</span>'
         }
         console.log(drinksOrdered);
     }
