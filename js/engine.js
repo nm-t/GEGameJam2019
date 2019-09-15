@@ -100,12 +100,14 @@ function render(id) {
     }
     else if (id == 'flirt') {
         menu = '<li id="ask-for-date" data-action="progress-dialogue">Ask for date</li>' +
-        '<li id="tip" data-action="progress-dialogue">Tip</li>';
+            whyWorriedOption +
+            '<li id="tip" data-action="progress-dialogue">Tip</li>';
         
         progressDialogue(flirtDialogue);
     }
     else if (id == 'ask-for-date') {
         menu = '<li id="order-drink" data-action="progress-dialogue">Order drink</li>' + 
+            whyWorriedOption +
             '<li id="flirt" data-action="progress-dialogue">Flirt</li>' +
             '<li id="tip" data-action="progress-dialogue">Tip</li>';
         
@@ -113,13 +115,15 @@ function render(id) {
     }
     else if (id == 'tip') {
         menu = '<li id="flirt" data-action="progress-dialogue">Flirt</li>' +
-        '<li id="ask-for-date" data-action="progress-dialogue">Ask for date</li>';
+            whyWorriedOption +
+            '<li id="ask-for-date" data-action="progress-dialogue">Ask for date</li>';
         
         progressDialogue(tipDialogue);
     }
     else if (id == 'offer-drink') {
         menu = '<li id="flirt" data-action="progress-dialogue">Flirt</li>' +
-        '<li id="ask-for-date" data-action="progress-dialogue">Ask for date</li>';
+            whyWorriedOption +
+            '<li id="ask-for-date" data-action="progress-dialogue">Ask for date</li>';
         
         progressDialogue(offerDrinkDialogue);
     }
@@ -172,7 +176,6 @@ function progressDialogue(dialogueOption) {
     dialogueCounter++;
     $('#next').attr('data-action', 'progress-dialogue');
 
-    // debugger;
     if (dialogueOption == flirtDialogue ||
         dialogueOption == askForDateDialogue ||
         dialogueOption == offerDrinkDialogue) {
