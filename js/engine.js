@@ -2,7 +2,9 @@ let menu = '<li id="go-to-bar" data-action="progress-dialogue">Continue</li>';
 let dialogueArray;
 let dialogue = '';
 
+let drinksOrdered = 0;
 let hasNecklace = false;
+let whyWorriedOption = '<li id="why-worried" data-action="progress-dialogue">Ask why worried</li>';
 
 const barDialogue = [
     '<i>You walk up to the bar and beckon to the bartender to order your drink.</i>',
@@ -21,16 +23,30 @@ const barWithNecklaceDialogue = [
     'I found it on the floor near the door.',
     '<span style="color: red;">Oh thank you. That\'s amazing, I really thought I had lost it!</span>'
 ];
+const flirtDialogue = [
+    'No thanks.'
+];
+const tipDialogue = [
+    'Thanks.'
+];
+const askForDateDialogue = [
+    'Thanks, but no thanks.'
+];
 
 let dialogueCounter = 0;
 
 function render(id) {
+    if (hasNecklace) {
+        whyWorriedOption = '';
+    }
+
     if (id == 'next') {
+        console.log(dialogueArray);
         if (!(dialogueArray == null || dialogueArray == undefined)) {
             dialogue = dialogueArray[dialogueCounter];
             dialogueCounter++;
 
-            if (dialogueCounter == dialogueArray.length) {
+            if (dialogueCounter >= dialogueArray.length) {
                 $('#next').attr('data-action', 'menu-dialogue');
                 $('#next').hide();
                 dialogueCounter = 0;
@@ -40,11 +56,17 @@ function render(id) {
     else if (id == 'go-to-bar') {
         $('#window').removeClass();
         $('#window').addClass(id);
-        menu = '<li id="order-drink" data-action="progress-dialogue">Order drink</li>'
 
-        progressDialogue(barDialogue);
-
-        if (hasNecklace) {
+        if (!hasNecklace) {
+            menu = '<li id="order-drink" data-action="progress-dialogue">Order drink</li>'
+    
+            progressDialogue(barDialogue);
+        }
+        else {
+            dialogueCounter = 0;
+            menu = '<li id="order-drink" data-action="progress-dialogue">Order drink</li>' + 
+                '<li id="ask-for-date" data-action="progress-dialogue">Ask for date</li>' +
+                '<li id="flirt" data-action="progress-dialogue">Flirt</li>';
             progressDialogue(barWithNecklaceDialogue);
         }
     }
@@ -52,11 +74,13 @@ function render(id) {
         $('#window').removeClass();
         $('#window').addClass(id);
         menu = '<li id="order-drink" data-action="progress-dialogue">Order drink</li>' + 
-            '<li id="why-worried" data-action="progress-dialogue">Ask why worried</li>' +
+            whyWorriedOption +
             '<li id="flirt" data-action="progress-dialogue">Flirt</li>' +
             '<li id="tip" data-action="progress-dialogue">Tip</li>' +
-            '<li id="offer-drink" data-action="progress-dialogue">Offer drink</li>'
+            '<li id="offer-drink" data-action="progress-dialogue">Offer drink</li>';
+
         progressDialogue(orderDrinkDialogue);
+        drinksOrdered++;
     }
     else if (id == 'why-worried') {
         menu = '<li id="look-around" data-action="progress-dialogue">Look around</li>';
@@ -64,9 +88,23 @@ function render(id) {
         progressDialogue(whyWorriedDialogue);
     }
     else if (id == 'flirt') {
-        menu = '<li id="flirt" data-action="progress-dialogue">Flirt</li>';
+        menu = '<li id="ask-for-date" data-action="progress-dialogue">Ask for date</li>' +
+        '<li id="tip" data-action="progress-dialogue">Tip</li>';
         
         progressDialogue(flirtDialogue);
+    }
+    else if (id == 'ask-for-date') {
+        menu = '<li id="order-drink" data-action="progress-dialogue">Order drink</li>' + 
+            '<li id="flirt" data-action="progress-dialogue">Flirt</li>' +
+            '<li id="tip" data-action="progress-dialogue">Tip</li>';
+        
+        progressDialogue(askForDateDialogue);
+    }
+    else if (id == 'tip') {
+        menu = '<li id="flirt" data-action="progress-dialogue">Flirt</li>' +
+        '<li id="ask-for-date" data-action="progress-dialogue">Ask for date</li>';
+        
+        progressDialogue(tipDialogue);
     }
     else if (id == 'look-around') {
         $('#window').removeClass();
@@ -142,3 +180,9 @@ function attachEventListeners() {
 window.onload = function() {
     attachEventListeners();
 }
+
+$(document).on('keypress', function(e) {
+    if (e.which == 13) {
+        $('#next').trigger('click');
+    }
+});
