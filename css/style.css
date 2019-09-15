@@ -188,11 +188,14 @@ p {
 .text-holder #next {
   display: inline-block;
   position: absolute;
-  bottom: 0;
+  bottom: -20px;
   right: 0;
-  width: 20px;
-  height: 20px;
-  background-color: red;
+  width: 0;
+  height: 0;
+  border: 20px solid #1D6DFA;
+  border-bottom-color: transparent;
+  border-left-color: transparent;
+  border-right-color: transparent;
 }
 
 .text-holder p {
